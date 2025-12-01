@@ -1,0 +1,2 @@
+# Requirements for SOTA Emotion Recognition
+# Add project dependencies here
