@@ -1,0 +1,106 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+notebooks/.ipynb_checkpoints/
+
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Data
+data/RAVDESS/**/*.wav
+data/processed/*.csv
+data/processed/*.npz
+*.pkl
+*.h5
+*.keras
+
+# Keep directory structure
+!data/RAVDESS/.gitkeep
+!data/processed/.gitkeep
+
+# Model checkpoints (keep best model only)
+models/checkpoints/*.keras
+models/checkpoints/*.h5
+models/checkpoints/*.pb
+models/checkpoints/assets/
+models/checkpoints/variables/
+
+# Results
+results/logs/**/*
+results/plots/*.png
+results/plots/*.jpg
+results/metrics/*.txt
+results/*.npz
+
+# TensorBoard
+events.out.tfevents.*
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Environment variables
+.env
+.env.local
+
+# Large files
+*.tar.gz
+*.zip
+*.rar
+*.7z
+
+# Backup files
+*.bak
+*.backup
+
+# Temporary files
+tmp/
+temp/
+*.tmp

@@ -1,0 +1,92 @@
+.PHONY: help setup download train evaluate test clean format lint all
+
+# Default target
+.DEFAULT_GOAL := help
+
+help: ## Show this help message
+	@echo "Speech Emotion Recognition - Makefile Commands"
+	@echo "================================================"
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+setup: ## Install dependencies and setup environment
+	@echo "Setting up environment..."
+	python3 -m venv venv
+	. venv/bin/activate && pip install --upgrade pip
+	. venv/bin/activate && pip install -r requirements.txt
+	@echo "✓ Setup complete!"
+
+download: ## Download dataset (shows instructions)
+	@bash scripts/download_data.sh
+
+train: ## Train the model
+	@bash scripts/train_model.sh
+
+evaluate: ## Evaluate the model
+	@bash scripts/evaluate_model.sh
+
+predict: ## Predict emotion from audio file (usage: make predict AUDIO=path/to/file.wav)
+	@bash scripts/evaluate_model.sh --audio $(AUDIO)
+
+test: ## Run unit tests
+	. venv/bin/activate && pytest tests/ -v --cov=src
+
+test-features: ## Test feature extraction
+	. venv/bin/activate && pytest tests/test_features.py -v
+
+test-preprocessing: ## Test preprocessing
+	. venv/bin/activate && pytest tests/test_preprocessing.py -v
+
+format: ## Format code with black and isort
+	. venv/bin/activate && black src/ tests/
+	. venv/bin/activate && isort src/ tests/
+
+lint: ## Lint code with flake8
+	. venv/bin/activate && flake8 src/ tests/ --max-line-length=100
+
+type-check: ## Type check with mypy
+	. venv/bin/activate && mypy src/
+
+clean: ## Clean generated files
+	@echo "Cleaning generated files..."
+	rm -rf __pycache__ .pytest_cache .mypy_cache .coverage
+	find . -type d -name "__pycache__" -exec rm -rf {} +
+	find . -type f -name "*.pyc" -delete
+	find . -type f -name "*.pyo" -delete
+	find . -type f -name ".DS_Store" -delete
+	@echo "✓ Cleanup complete!"
+
+clean-data: ## Clean processed data and models (keeps raw data)
+	@echo "Cleaning processed data and models..."
+	rm -rf data/processed/*
+	rm -rf models/checkpoints/*
+	rm -rf results/plots/*
+	rm -rf results/metrics/*
+	rm -rf results/logs/*
+	@echo "✓ Data cleanup complete!"
+
+clean-all: clean clean-data ## Clean everything
+
+tensorboard: ## Launch TensorBoard
+	. venv/bin/activate && tensorboard --logdir results/logs/
+
+notebook: ## Launch Jupyter notebook
+	. venv/bin/activate && jupyter notebook notebooks/
+
+all: setup download train evaluate ## Run complete pipeline
+
+check-data: ## Check if dataset is downloaded
+	@if [ -d "data/RAVDESS/Actor_01" ]; then \
+		echo "✓ Dataset found"; \
+		find data/RAVDESS -name "*.wav" | wc -l | xargs echo "  Audio files:"; \
+	else \
+		echo "❌ Dataset not found. Run: make download"; \
+	fi
+
+info: ## Show project information
+	@echo "Speech Emotion Recognition Project"
+	@echo "===================================="
+	@echo "Python version: $$(python --version 2>&1)"
+	@echo "TensorFlow version: $$(python -c 'import tensorflow as tf; print(tf.__version__)' 2>/dev/null || echo 'Not installed')"
+	@echo "GPU available: $$(python -c 'import tensorflow as tf; print(len(tf.config.list_physical_devices(\"GPU\")) > 0)' 2>/dev/null || echo 'Unknown')"
+	@echo ""
+	@make check-data
