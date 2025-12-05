@@ -23,7 +23,7 @@ filename = "/content/emilia.mp4"
 
 This project implements a lightweight **CNN-based multimodal emotion recognition system** using **video frames + audio spectrograms**. The method uses **feature-level fusion** (concatenating face and audio features) and does **not** rely on Transformers, making it computationally efficient. Based on https://github.com/katerynaCh/multimodal-emotion-recognition
 
-# 1. Overview
+### 1. Overview
 
 The system extracts:
 
@@ -36,7 +36,7 @@ Training and inference both rely on an options file (**opts.py**) to set paramet
 
 ---
 
-# 2. Project Structure
+### 2. Project Structure
 
 ```
 project/
@@ -52,7 +52,7 @@ and others
 ---
 
 
-## 3.3 Running Training
+#### 3.3 Running Training
 
 Example:
 
@@ -62,13 +62,13 @@ python python main.py
 
 ---
 
-## 3.4 Important Training Options
+#### 3.4 Important Training Options
 --pretrain_path = path to EfficientFace pre-trained model.
 --result_path = path where the results and trained models will be saved
 --annotation_path = path to annotation file generated at previous step
-# 4. Inference
+### 4. Inference
 
-## 4.0 Model Path Options
+#### 4.0 Model Path Options
 To toggle only inference mode write:
 ```
 --only_inference
@@ -82,7 +82,7 @@ You can override the default model paths directly from the command line:
 
 These values are passed into `main.py` → `TrainingAlignedInference` so they correctly update the model loading inside **inference.py**.
 
-## 4.1 What Inference Does
+#### 4.1 What Inference Does
 
 The inference system:
 
@@ -94,7 +94,7 @@ The inference system:
 
 ---
 
-## 4.2 Sliding Window Inference
+#### 4.2 Sliding Window Inference
 
 Each input video is divided into time windows:
 
@@ -111,7 +111,7 @@ Outputs (probabilities + dominant emotion) are stored.
 
 ---
 
-# 4.3 Running Inference
+### 4.3 Running Inference
 
 Basic example:
 
