@@ -48,7 +48,7 @@ project/
 │── models/                 # 1D and 2D CNN encoders
 │── results/                # Saved model weights
 ```
-
+and others
 ---
 
 
@@ -57,48 +57,22 @@ project/
 Example:
 
 ```
-python training.py \
-    --train_dir /data/train \
-    --val_dir /data/val \
-    --epochs 40 \
-    --batch_size 8 \
-    --lr 1e-4
+python python main.py
 ```
 
 ---
 
 ## 3.4 Important Training Options
-
-### **Dataset options**
-
-* `--train_dir`: Path to training dataset
-* `--val_dir`: Path to validation dataset
-* `--labels`: Path to label mapping
-
-### **Training hyperparameters**
-
-* `--epochs`: Number of epochs
-* `--batch_size`: Batch size
-* `--lr`: Learning rate
-* `--weight_decay`: L2 regularization
-
-### **Model + hardware**
-
-* `--device {cuda,cpu}`: Force device
-* `--save_every`: Model checkpoint frequency
-* `--resume`: Continue from checkpoint
-
-### **Video/audio preprocessing**
-
-* `--video_len`: Number of frames used per training sample
-* `--audio_win`: Audio window size (in spectrogram bins)
-
----
-
+--pretrain_path = path to EfficientFace pre-trained model.
+--result_path = path where the results and trained models will be saved
+--annotation_path = path to annotation file generated at previous step
 # 4. Inference
 
 ## 4.0 Model Path Options
-
+To toggle only inference mode write:
+```
+--only_inference
+```
 You can override the default model paths directly from the command line:
 
 ```
@@ -145,11 +119,6 @@ Basic example:
 python main.py --media_path path/to/video.mp4
 ```
 
-Specify the sliding step:
-
-```
-python main.py --media_path video.mp4 --step_sec 0.5
-```
 
 Disable plotting:
 
@@ -162,24 +131,6 @@ Save a plot:
 ```
 python main.py --media_path video.mp4 --save_plot results/plot.png
 ```
-
----
-
-## 4.4 Important Inference Options
-
-### **Input + processing**
-
-* `--media_path`: Video or audio file (required)
-* `--step_sec`: Sliding window step size in seconds
-
-### **Device**
-
-* `--device {cuda,cpu}`: Select GPU or CPU
-
-### **Plotting**
-
-* `--no_plot`: Disable visualization
-* `--save_plot <path>`: Save figure to file
 
 ---
 
