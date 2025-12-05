@@ -14,7 +14,10 @@ Implementation of State-of-the-Art Multimodal Emotion Recognition for Long-Durat
 
 
 ## Late Fusion emotion recognition
-
+The inference file inference_late_fusion.ipynb contains the code to run. All the required files are inside the folder. To change the video for inference you may change the first line of 3rd block:
+```
+filename = "/content/emilia.mp4"
+```
 
 ## Intermediate Fusion emotion recognition
 
